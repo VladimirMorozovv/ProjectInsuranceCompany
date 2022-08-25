@@ -245,8 +245,8 @@ POST /policy
   "idFL": "None",
   "idL": 45,
   "idObjects": 67,
-  "startDate": "01.09.2022",
-  "stopDate": "01.09.2023",
+  "startDate": "01.09.22",
+  "stopDate": "01.09.23",
   "insuranceAmount": 2000000
   
 }
@@ -271,8 +271,8 @@ PUT /policy
   "idFL": "None",
   "idL": 45,
   "idObjects": 67,
-  "startDate": "01.09.2022",
-  "stopDate": "01.09.2023",
+  "startDate": "01.09.22",
+  "stopDate": "01.09.23",
   "insuranceAmount": 2000000
   
 }
@@ -294,7 +294,7 @@ PUTCH /policy
 
 ```json
 {
-  "idTypes": 456,
+  "policyNumber": 456,
   "status": "sold"
   
 }
@@ -340,11 +340,11 @@ POST /payment
 Данный идентификатор и будет передаваться в GET запросе.
 - Отчет по продажам различных видов полисов за период == report1 
 ```
-GET /reports/?name=report1&datastart=22.05.2010&datastop=22.06.2010
+GET /reports/?name=report1&datastart='2021-04-22'&datastop='2022-04-22'
 ```
 - Отчет по страховым выплатам за период == report2 
 ```
-GET /reports/?name=report2&datastart=22.05.2010&datastop=22.06.2010
+GET /reports/?name=report2&datastart='2021-04-22'&datastop='2022-04-22'
 ```
 - Отчет о полисах конкретного клиента и сроках их окончания == report3 
 ```
