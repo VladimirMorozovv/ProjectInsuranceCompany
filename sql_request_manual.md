@@ -69,6 +69,6 @@ WHERE idObjects = 3;
 - Запрос на удаление данных объекта в справочнике
 ```
 DELETE FROM objectsInsurance
-WHERE idObjects=2
+WHERE idObjects=2 
 ```
 ***
