@@ -35,3 +35,40 @@ WHERE id=2
 DELETE FROM ClientLegal
 WHERE id=2
 ```
+# 2. Управление справочником типов объектов страхования
+- Запрос на добавление типа объекта в справочник
+```
+INSERT INTO typesInsuranceObjects
+(ObjectType)
+VALUES
+    ('Транспортное средство');
+```
+- Запрос на изменение данных типа объекта в справочнике
+```
+UPDATE typesInsuranceObjects SET ObjectType = 'Автомобиль' WHERE idTypes = 1;
+```
+- Запрос на удаление данных типа объекта в справочнике
+```
+DELETE FROM typesInsuranceObjects
+WHERE idTypes=2
+```
+
+3. Управление справочником объектов страхования
+- Запрос на добавление объекта в справочник
+```
+INSERT INTO objectsInsurance
+(Name, numberPassport, idTypeObject)
+VALUES
+    ('Квартира', '6367487263', 2);
+```
+- Запрос на изменение данных объекта в справочнике
+```
+UPDATE objectsInsurance SET Name = 'Квартира', numberPassport = 6367487263, idTypeObject =3 
+WHERE idObjects = 3;
+```
+- Запрос на удаление данных объекта в справочнике
+```
+DELETE FROM objectsInsurance
+WHERE idObjects=2
+```
+***
