@@ -374,7 +374,7 @@ GET /reports/?name=report6
 
 - Просмотр полисов, которые закачиваются на конкретную дату == viewing1
 ```
-GET /viewing/?name=viewing1&data=30.05
+GET /viewing/?name=viewing1&data=2020.30.05
 ```
 - Просмотр полисов по объекту страхования == viewing2
 ```

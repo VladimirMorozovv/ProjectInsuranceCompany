@@ -137,3 +137,35 @@ FROM insurancePolicyClient, payoutsDirectoryClient
 WHERE insurancePolicyClient.policyNumber = payoutsDirectoryClient.policyNumber
 GROUP BY idFL, idL order by money DESC LIMIT 10; 
 ```
+# 11. Пстроение отчета об объектах с самой большой сумой страхования.
+- Запрос на таблицу которая имеет объекты страхования и сумма страхования на них.
+```sql
+SELECT objectsInsurance.idObjects, objectsInsurance.Name, objectsInsurance.numberPassport, insurancePolicyClient.insuranceAmount
+FROM insurancePolicyClient, objectsInsurance
+WHERE objectsInsurance.idObjects = insurancePolicyClient.idObjects
+GROUP BY insurancePolicyClient.insuranceAmount, objectsInsurance.Name, objectsInsurance.numberPassport, objectsInsurance.idObjects
+ORDER BY insuranceAmount DESC LIMIT 10; 
+```
+
+# 12. Построение отчета об убыточности/прибыльности компании.
+- Запрос на значение разницы сумм проданных полисов и выплаченных средств.
+```sql
+SELECT OUTPUT.sum - INPUT.sum AS "Разница между проданнами полисами и выплат страхователям"
+FROM (SELECT SUM(costInsurance) sum
+      FROM insurancePolicyClient
+      WHERE status='sold') OUTPUT,
+     (SELECT SUM(payoutAmount) sum
+      FROM payoutsDirectoryClient) INPUT;
+```
+# 13. Просмотр полисов заканчивающихся на конкретную дату.
+- Запрос таблицы полисов с условием определенным значением даты.
+```sql
+ SELECT * FROM insurancePolicyClient
+WHERE  stopDate = '2022-07-23 00:00:00' ;
+```
+# 14. Просмотр полисов по объекту страхования.
+- Запрос таблицы полисов с выбранным объектом страхования.
+```sql
+SELECT * FROM insurancePolicyClient
+WHERE  idTypeObject = 2 ;
+```
