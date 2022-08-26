@@ -21,7 +21,7 @@ numberPassport = '8911 428645', numberPhone = '89514267878' WHERE id = 2;
 ```
 - Запрос на изменение данных юридического лица в БД
 ```sql
-UUPDATE ClientLegal SET Name = 'АО Бишкек', legalAddress = 'г.Санкт-Петербург, ул. Морская, д.8',
+UPDATE ClientLegal SET Name = 'АО Бишкек', legalAddress = 'г.Санкт-Петербург, ул. Морская, д.8',
 OGRN = '8911 428645', numberPhone = '8800451212' WHERE id = 2;
 ```
 - Запрос на удаление данных клиента физического лица в БД
