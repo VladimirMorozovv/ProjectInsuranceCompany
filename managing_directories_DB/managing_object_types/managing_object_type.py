@@ -1,5 +1,5 @@
 import config
-import data_object_type
+import managing_directories_DB.managing_object_types.data_object_type as data_object_type
 import mysql.connector
 
 

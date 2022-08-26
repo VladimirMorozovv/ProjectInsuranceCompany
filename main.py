@@ -1,17 +1,31 @@
-import mysql.connector
-import config
+from flask import Flask, request, jsonify
+from managing_directories_DB.managing_object_types.managing_object_type import Managing_object_type
+from managing_directories_DB.managing_object_types.data_object_type import ObjectType
 
-try:
-    with mysql.connector.connect(host=config.host,
-                                 user=config.user,
-                                 password=config.password,
-                                 database=config.database,
-                                 ) as connection:
-        show_db_query = "show create table ClientFL"
-        with connection.cursor() as cursor:
-            cursor.execute(show_db_query)
-            for row in cursor:
-                print(row)
-except Exception as e:
-    print(e)
-    print('Не удалось подключится к базе')
+app = Flask(__name__)
+
+client_service = Managing_object_type()
+
+
+@app.route("/client", methods=["GET", "POST"])
+def client():
+    if request.method == "POST":
+        data = request.json
+
+        object_type = ObjectType(data["login"])
+        err = client_service.add(object_type)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"body": {"test": data}}), 201
+    elif request.method == "GET":
+        return jsonify({"body": "GET"})
+
+
+@app.route("/server", methods=["GET"])
+def server():
+    return jsonify({"body": "test"})
+
+
+if __name__ == "__main__":
+    app.run(port=5000)
