@@ -16,7 +16,7 @@ class Managing_object:
                     INSERT INTO objectsInsurance
                     (Name, numberPassport, idTypeObject)
                     VALUES
-                    ({object.Name}, {object.numberPassport}, {object.idTypeObject})
+                    ('{object.Name}', '{object.numberPassport}', {object.idTypeObject})
 
                 """
                 with connection.cursor() as cursor:
@@ -33,7 +33,7 @@ class Managing_object:
                                          database=config.database,
                                          ) as connection:
                 change_object = f"""
-                    UPDATE objectsInsurance SET Name = {object.Name}, numberPassport = {object.numberPassport}, idTypeObject ={object.idTypeObject}
+                    UPDATE objectsInsurance SET Name = '{object.Name}', numberPassport = '{object.numberPassport}', idTypeObject ={object.idTypeObject}
                     WHERE id = {object.idObjects}
                 """
                 with connection.cursor() as cursor:

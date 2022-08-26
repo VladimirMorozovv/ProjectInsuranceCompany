@@ -16,7 +16,7 @@ class CustomerFL_managment:
                     INSERT INTO ClientFL
                     (FIO, residentialAddress, numberPassport, numberPhone)
                     VALUES
-                    ({client.FIO}, {client.residentialAddress}, {client.numberPassport}, {client.numberPhone})
+                    ('{client.FIO}', '{client.residentialAddress}', '{client.numberPassport}', '{client.numberPhone}')
 
                 """
                 with connection.cursor() as cursor:
@@ -34,7 +34,7 @@ class CustomerFL_managment:
                                          ) as connection:
                 change_cleintsFL = f"""
                     UPDATE ClientFL SET
-                    FIO = {client.FIO}, residentialAddress = {client.residentialAddress}, numberPassport={client.numberPassport}, numberPhone = {client.numberPhone}
+                    FIO = '{client.FIO}', residentialAddress = '{client.residentialAddress}', numberPassport='{client.numberPassport}', numberPhone = '{client.numberPhone}'
                     WHERE id = {client.id}
                 """
                 with connection.cursor() as cursor:
@@ -73,7 +73,7 @@ class CustomerL_managment:
                     INSERT INTO ClientLegal
                     (Name, legalAddress, OGRN, numberPhone)
                     VALUES
-                    ({client.Name}, {client.legalAddress}, {client.OGRN}, {client.numberPhone})
+                    ('{client.Name}', '{client.legalAddress}', '{client.OGRN}', '{client.numberPhone}')
 
                 """
                 with connection.cursor() as cursor:
@@ -91,7 +91,7 @@ class CustomerL_managment:
                                          ) as connection:
                 change_cleintsFL = f"""
                     UPDATE ClientLegal SET
-                    Name = {client.Name}, legalAddress = {client.legalAddress}, OGRN = {client.OGRN}, numberPhone = {client.numberPhone}
+                    Name = '{client.Name}', legalAddress = '{client.legalAddress}', OGRN = '{client.OGRN}', numberPhone = '{client.numberPhone}'
                     WHERE id = {client.id}
                 """
                 with connection.cursor() as cursor:

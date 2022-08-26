@@ -16,7 +16,7 @@ class Managing_object_type:
                     INSERT INTO typesInsuranceObjects
                     (ObjectType)
                     VALUES
-                    ({object_type.ObjectType});
+                    ('{object_type.ObjectType}');
 
                 """
                 with connection.cursor() as cursor:
@@ -33,7 +33,7 @@ class Managing_object_type:
                                          database=config.database,
                                          ) as connection:
                 change_object_type = f"""
-                    UPDATE typesInsuranceObjects SET ObjectType = {object_type.ObjectType} WHERE idTypes = {object_type.idTypes};
+                    UPDATE typesInsuranceObjects SET ObjectType = '{object_type.ObjectType}' WHERE idTypes = {object_type.idTypes};
                 """
                 with connection.cursor() as cursor:
                     cursor.execute(change_object_type)
