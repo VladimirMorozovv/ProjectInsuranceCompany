@@ -3,8 +3,11 @@ from managing_directories_DB.managing_object_types.managing_object_type import M
 from managing_directories_DB.managing_object_types.data_object_type import ObjectType
 from managing_directories_DB.customer_management.customer_managment import CustomerFL_managment, CustomerL_managment
 from managing_directories_DB.customer_management.data_clients import ClientFL, ClientL
-#from managing_directories_DB.managing_object.managing_object import Managing_object
-#from managing_directories_DB.managing_object.data_object import Object
+from managing_directories_DB.managing_object.managing_object import Managing_object
+from managing_directories_DB.managing_object.data_object import Object
+from managing_directories_DB.policy_management.policy_management import Policy_managment
+from managing_directories_DB.policy_management.data_policy import Policy, SellPolicy
+import reports.report1
 
 
 app = Flask(__name__)
@@ -13,7 +16,7 @@ managing_object_type = Managing_object_type()
 customerFL_managment = CustomerFL_managment()
 customerL_managment = CustomerL_managment()
 managing_object = Managing_object()
-
+policy_managment = Policy_managment()
 
 @app.route("/object_type", methods=["POST", "PUT", "DELETE"])
 def type():
@@ -137,5 +140,67 @@ def object():
             return jsonify({"body": "error"}), 500
         else:
             return jsonify({"status": "success", "text": "Данные успешно удалены"}), 201
+
+
+@app.route("/policy", methods=["POST", "PUT", "PUTCH"])
+def polic():
+    if request.method == "POST":
+        data = request.json
+        if data["idL"]== "None":
+
+
+            policy = Policy(data["didTypeObject"], data["idObjects"], data["startDate"], data["stopDate"],
+                            data["insuranceAmount"], data["idFL"])
+            err = policy_managment.add(policy)
+            if err is not None:
+                return jsonify({"body": "error"}), 500
+            else:
+                return jsonify({"status": "success", "text": "Данные успешно внесены в базу"}), 201
+        elif data["idFL"] == "None":
+
+            policy = Policy(data["didTypeObject"], data["idObjects"], data["startDate"], data["stopDate"],
+                            data["insuranceAmount"], None, data["idL"])
+            err = policy_managment.add(policy)
+            if err is not None:
+                return jsonify({"body": "error"}), 500
+            else:
+                return jsonify({"status": "success", "text": "Данные успешно внесены в базу"}), 201
+        elif request.method == "PUT":
+            data = request.json
+
+    elif request.method == "PUT":
+        data = request.json
+
+        if data["idL"] == "None":
+
+            policy = Policy(data["didTypeObject"], data["idObjects"], data["startDate"], data["stopDate"],
+                            data["insuranceAmount"], data["idFL"], None, data["policyNumber"])
+            err = policy_managment.change(policy)
+            if err is not None:
+                return jsonify({"body": "error"}), 500
+            else:
+                return jsonify({"status": "success", "text": "Данные успешно изменены"}), 201
+        elif data["idFL"] == "None":
+
+            policy = Policy(data["didTypeObject"], data["idObjects"], data["startDate"], data["stopDate"],
+                            data["insuranceAmount"], None, data["idL"], data["policyNumber"])
+            err = policy_managment.change(policy)
+            if err is not None:
+                return jsonify({"body": "error"}), 500
+            else:
+                return jsonify({"status": "success", "text": "Данные успешно изменены"}), 201
+
+
+    elif request.method == "PUTCH":
+        data = request.json
+
+        policy = SellPolicy(data["policyNumber"], data["status"])
+        err = policy_managment.sell(policy)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"status": "success", "text": "Продажа исполнена"}), 201
+
+
 if __name__ == "__main__":
     app.run(port=5000)

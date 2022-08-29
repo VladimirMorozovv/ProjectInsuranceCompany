@@ -1,5 +1,5 @@
 import config
-import data_policy
+import managing_directories_DB.policy_management.data_policy as data_policy
 import mysql.connector
 
 
