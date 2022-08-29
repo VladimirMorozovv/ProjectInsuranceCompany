@@ -1,5 +1,5 @@
 import config
-import data_clients
+import managing_directories_DB.customer_management.data_clients as data_clients
 import mysql.connector
 
 
