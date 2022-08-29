@@ -3,13 +3,16 @@ from managing_directories_DB.managing_object_types.managing_object_type import M
 from managing_directories_DB.managing_object_types.data_object_type import ObjectType
 from managing_directories_DB.customer_management.customer_managment import CustomerFL_managment, CustomerL_managment
 from managing_directories_DB.customer_management.data_clients import ClientFL, ClientL
+#from managing_directories_DB.managing_object.managing_object import Managing_object
+#from managing_directories_DB.managing_object.data_object import Object
+
 
 app = Flask(__name__)
 
 managing_object_type = Managing_object_type()
 customerFL_managment = CustomerFL_managment()
 customerL_managment = CustomerL_managment()
-
+managing_object = Managing_object()
 
 
 @app.route("/object_type", methods=["POST", "PUT", "DELETE"])
@@ -104,6 +107,35 @@ def man_client():
             else:
                 return jsonify({"status": "success", "text": "Данные успешно изменены"}), 201
 
+@app.route("/object_type", methods=["POST", "PUT", "DELETE"])
+def object():
+    if request.method == "POST":
+        data = request.json
 
+        object_type = Object(data["Name"], data["numberPassport"], data["idTypeObject"])
+        err = managing_object.add(object_type)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"status": "success", "text": "Данные успешно внесены в базу"}), 201
+    elif request.method == "PUT":
+        data = request.json
+
+        object_type = Object(data["Name"], data["numberPassport"], data["idTypeObject"], data["idObjects"])
+        err = managing_object.change(object_type)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"status": "success", "text": "Данные успешно изменены"}), 201
+
+    elif request.method == "DELETE":
+        data = request.json
+
+        object_type = Object(None, None, None, data["id"])
+        err = managing_object.delete(object_type)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"status": "success", "text": "Данные успешно удалены"}), 201
 if __name__ == "__main__":
     app.run(port=5000)
