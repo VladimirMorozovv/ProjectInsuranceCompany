@@ -1,27 +1,32 @@
 import config
 import mysql.connector
 
-class :
+class Report_development1:
     def __init__(self, data_start, data_stop):
         self.data_start = data_start
         self.data_stop = data_stop
+        self.mistake = ""
 
-    def processing_report(self, object_type: data_object_type.ObjectType):
+    def processing_report(self, data_start, data_stop):
         try:
             with mysql.connector.connect(host=config.host,
                                          user=config.user,
                                          password=config.password,
                                          database=config.database,
                                          ) as connection:
-                select_profitability = "SELECT OUTPUT.sum - INPUT.sum AS 'Разница между проданными полисами и выплат" \
-                                       " страхователям' FROM (SELECT SUM(costInsurance) sum FROM insurancePolicyClient " \
-                                       "WHERE status='sold') OUTPUT, (SELECT SUM(payoutAmount) sum " \
-                                       "FROM payoutsDirectoryClient) INPUT"
+                select_profitability = f"""SELECT typesInsuranceObjects.ObjectType, SUM(insurancePolicyClient.costInsurance)
+                                        FROM typesInsuranceObjects, insurancePolicyClient
+                                        WHERE insurancePolicyClient.idTypeObject = typesInsuranceObjects.idTypes 
+                                        and insurancePolicyClient.startDate BETWEEN '{data_start}' and '{data_stop}'
+                                        GROUP BY typesInsuranceObjects.ObjectType;"""
                 with connection.cursor() as cursor:
                     cursor.execute(select_profitability)
                     result = cursor.fetchall()
-                    for row in result:
-                        self.result = row
+                    filename = 'report1_result.txt'
+                    f = open(filename, 'w')
+                    for i in result:
+                        f.write(''.join(map(lambda a: str(a).ljust(22), i)) + '\n')
+
 
         except Exception as e:
             self.mistake = e
