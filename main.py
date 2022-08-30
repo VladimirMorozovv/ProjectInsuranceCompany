@@ -7,7 +7,8 @@ from managing_directories_DB.managing_object.managing_object import Managing_obj
 from managing_directories_DB.managing_object.data_object import Object
 from managing_directories_DB.policy_management.policy_management import Policy_managment
 from managing_directories_DB.policy_management.data_policy import Policy, SellPolicy
-import reports.report1
+
+from reports.report1 import Report_development1
 
 
 app = Flask(__name__)
@@ -200,6 +201,39 @@ def polic():
             return jsonify({"body": "error"}), 500
         else:
             return jsonify({"status": "success", "text": "Продажа исполнена"}), 201
+
+@app.route("/report", methods=["GET"])
+def all_report():
+
+    if request.args['name']=='report1':
+
+        report_one = Report_development1(request.args['datestart'], request.args['datestart'])
+        err = report_one.processing_report(report_one.data_start, report_one.data_stop)
+
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return , 201
+    elif request.method == "PUT":
+        data = request.json
+
+        object_type = Object(data["Name"], data["numberPassport"], data["idTypeObject"], data["idObjects"])
+        err = managing_object.change(object_type)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"status": "success", "text": "Данные успешно изменены"}), 201
+
+    elif request.method == "DELETE":
+        data = request.json
+
+        object_type = Object(None, None, None, data["id"])
+        err = managing_object.delete(object_type)
+        if err is not None:
+            return jsonify({"body": "error"}), 500
+        else:
+            return jsonify({"status": "success", "text": "Данные успешно удалены"}), 201
+
 
 
 if __name__ == "__main__":
