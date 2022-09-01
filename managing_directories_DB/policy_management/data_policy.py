@@ -19,6 +19,7 @@ class Policy:
         self.stopDate = stopDate
         self.insuranceAmount = insuranceAmount
 
+
 class SellPolicy:
     policyNumber: int
     status: str

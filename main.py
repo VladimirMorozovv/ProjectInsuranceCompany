@@ -273,7 +273,33 @@ def all_report():
         else:
             return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report6_result.txt')
 
+@app.route("/viewing", methods=["GET"])
+def all_viewing():
+    if str(request.args['name']) == 'viewing1':
+        policy_managment = Policy_managment()
+        result = {}
+        for model in policy_managment.get_polices_datestop(request.args['date']):
+            result.update({model.policyNumber:{"idTypeObject":model.idTypeObject,
+                                                "idFL":model.idFL,
+                                                "idL":model.idL,
+                                                "idObjects":model.idObjects,
+                                                "startDate":model.startDate,
+                                                "stopDate":model.stopDate,
+                                                "insuranceAmount":model.insuranceAmount}})
+        return jsonify(result), 200
 
 
+    elif str(request.args['name']) == 'viewing2':
+        policy_managment = Policy_managment()
+        result = {}
+        for model in policy_managment.get_polices_id_type_object(request.args['idtype']):
+            result.update({model.policyNumber:{"idTypeObject":model.idTypeObject,
+                                                "idFL":model.idFL,
+                                                "idL":model.idL,
+                                                "idObjects":model.idObjects,
+                                                "startDate":model.startDate,
+                                                "stopDate":model.stopDate,
+                                                "insuranceAmount":model.insuranceAmount}})
+        return jsonify(result), 200
 if __name__ == "__main__":
     app.run(port=5000)

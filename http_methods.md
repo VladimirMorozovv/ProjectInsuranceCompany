@@ -366,7 +366,7 @@ GET /report/?name=report6
 ```
 Предпологаемый ответ:
 ```
-ссылка на файл с отчетом
+файл
 ```
 
 # 8. Просмотр полисов.
@@ -374,13 +374,24 @@ GET /report/?name=report6
 
 - Просмотр полисов, которые закачиваются на конкретную дату == viewing1
 ```
-GET /viewing/?name=viewing1&data=2020.30.05
+GET /viewing?name=viewing1&date=2020-30-05
 ```
 - Просмотр полисов по объекту страхования == viewing2
 ```
-GET /viewing/?name=viewing2&idtype=2
+GET /viewing?name=viewing2&idtype=2
 ```
 Предпологаемый ответ:
 ```
-ссылка на файл с таблицей
+
+{
+    "2": {
+        "idFL": null,
+        "idL": 3,
+        "idObjects": 3,
+        "idTypeObject": 2,
+        "insuranceAmount": 50000000,
+        "startDate": "Fri, 22 Jul 2022 00:00:00 GMT",
+        "stopDate": "Sat, 23 Jul 2022 00:00:00 GMT"
+    }
+}
 ```
