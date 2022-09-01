@@ -340,29 +340,29 @@ POST /payment
 Данный идентификатор и будет передаваться в GET запросе.
 - Отчет по продажам различных видов полисов за период == report1 
 ```
-GET /reports/?name=report1&datestart='2021-04-22'&datestop='2022-04-22'
+GET /report?name=report1&datestart='2021-04-22'&datestop='2022-04-22'
 ```
 - Отчет по страховым выплатам за период == report2 
 ```
-GET /reports/?name=report2&datastart='2021-04-22'&datastop='2022-04-22'
+GET /report?name=report2&datastart='2021-04-22'&datastop='2022-04-22'
 ```
 - Отчет о полисах конкретного клиента и сроках их окончания == report3 
 ```
-GET /reports/?name=report3&clientid=55
+GET /report?name=report3&clientid=55
 ```
 - Отчет о самых "невыгодных" клиентах с самыми большими выплатами за период == report4 
 ```
-GET /reports/?name=report4
+GET /report?name=report4
 ```
 
 - Отчет об объектах с самой большой суммой страхования == report5 
 ```
-GET /reports/?name=report5
+GET /report/?name=report5
 ```
 
 - Отчет об убыточности/прибыльности компании == report6 
 ```
-GET /reports/?name=report6
+GET /report/?name=report6
 ```
 Предпологаемый ответ:
 ```

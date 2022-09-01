@@ -15,7 +15,7 @@ class Report_development3:
                                          database=config.database,
                                          ) as connection:
                 select_profitability = f"""SELECT policyNumber, stopDate FROM insurancePolicyClient
-                                        WHERE idL={id} and stopDate > CURRENT_DATE();  
+                                        WHERE idL={id} or idFL={id} and stopDate > CURRENT_DATE();  
                                     """
                 with connection.cursor() as cursor:
                     cursor.execute(select_profitability)
