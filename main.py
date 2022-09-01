@@ -26,6 +26,7 @@ customerL_managment = CustomerL_managment()
 managing_object = Managing_object()
 policy_managment = Policy_managment()
 
+
 @app.route("/object_type", methods=["POST", "PUT", "DELETE"])
 def type():
     if request.method == "POST":
@@ -64,7 +65,7 @@ def man_client():
         data = request.json
         if data["legal"] == "False":
 
-            client = ClientFL(data["FIO"], data["residentialAddress"],  data["numberPassport"], data["numberPhone"])
+            client = ClientFL(data["FIO"], data["residentialAddress"], data["numberPassport"], data["numberPhone"])
             err = customerFL_managment.add(client)
             if err is not None:
                 return jsonify({"body": "error"}), 500
@@ -72,7 +73,7 @@ def man_client():
                 return jsonify({"status": "success", "text": "Данные успешно внесены в базу"}), 201
         elif data["legal"] == "True":
 
-            client = ClientL(data["Name"], data["legalAddress"],  data["OGRN"], data["numberPhone"])
+            client = ClientL(data["Name"], data["legalAddress"], data["OGRN"], data["numberPhone"])
             err = customerL_managment.add(client)
             if err is not None:
                 return jsonify({"body": "error"}), 500
@@ -83,7 +84,8 @@ def man_client():
 
         if data["legal"] == "False":
 
-            client = ClientFL(data["FIO"], data["residentialAddress"], data["numberPassport"], data["numberPhone"], data["id"])
+            client = ClientFL(data["FIO"], data["residentialAddress"], data["numberPassport"], data["numberPhone"],
+                              data["id"])
             err = customerFL_managment.change(client)
             if err is not None:
                 return jsonify({"body": "error"}), 500
@@ -117,6 +119,7 @@ def man_client():
                 return jsonify({"body": "error"}), 500
             else:
                 return jsonify({"status": "success", "text": "Данные успешно изменены"}), 201
+
 
 @app.route("/object_type", methods=["POST", "PUT", "DELETE"])
 def object():
@@ -154,8 +157,7 @@ def object():
 def polic():
     if request.method == "POST":
         data = request.json
-        if data["idL"]== "None":
-
+        if data["idL"] == "None":
 
             policy = Policy(data["didTypeObject"], data["idObjects"], data["startDate"], data["stopDate"],
                             data["insuranceAmount"], data["idFL"])
@@ -209,10 +211,10 @@ def polic():
         else:
             return jsonify({"status": "success", "text": "Продажа исполнена"}), 201
 
+
 @app.route("/report", methods=["GET"])
 def all_report():
-
-    if str(request.args['name'])=='report1':
+    if str(request.args['name']) == 'report1':
 
         report_one = Report_development1(request.args['datestart'], request.args['datestop'])
         err = report_one.processing_report(str(report_one.data_start), str(report_one.data_stop))
@@ -273,33 +275,36 @@ def all_report():
         else:
             return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report6_result.txt')
 
+
 @app.route("/viewing", methods=["GET"])
 def all_viewing():
     if str(request.args['name']) == 'viewing1':
         policy_managment = Policy_managment()
-        result = {}
+        result = []
         for model in policy_managment.get_polices_datestop(request.args['date']):
-            result.update({model.policyNumber:{"idTypeObject":model.idTypeObject,
-                                                "idFL":model.idFL,
-                                                "idL":model.idL,
-                                                "idObjects":model.idObjects,
-                                                "startDate":model.startDate,
-                                                "stopDate":model.stopDate,
-                                                "insuranceAmount":model.insuranceAmount}})
+            result.append({"policyNumber": model.policyNumber,
+                           "idTypeObject": model.idTypeObject,
+                           "idFL": model.idFL,
+                           "idL": model.idL,
+                           "idObjects": model.idObjects,
+                           "startDate": model.startDate,
+                           "stopDate": model.stopDate,
+                           "insuranceAmount": model.insuranceAmount})
         return jsonify(result), 200
-
 
     elif str(request.args['name']) == 'viewing2':
         policy_managment = Policy_managment()
         result = {}
         for model in policy_managment.get_polices_id_type_object(request.args['idtype']):
-            result.update({model.policyNumber:{"idTypeObject":model.idTypeObject,
-                                                "idFL":model.idFL,
-                                                "idL":model.idL,
-                                                "idObjects":model.idObjects,
-                                                "startDate":model.startDate,
-                                                "stopDate":model.stopDate,
-                                                "insuranceAmount":model.insuranceAmount}})
+            result.update({model.policyNumber: {"idTypeObject": model.idTypeObject,
+                                                "idFL": model.idFL,
+                                                "idL": model.idL,
+                                                "idObjects": model.idObjects,
+                                                "startDate": model.startDate,
+                                                "stopDate": model.stopDate,
+                                                "insuranceAmount": model.insuranceAmount}})
         return jsonify(result), 200
+
+
 if __name__ == "__main__":
     app.run(port=5000)
