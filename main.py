@@ -224,7 +224,7 @@ def all_report():
 
     elif str(request.args['name']) == 'report2':
 
-        report_two = Report_development1(request.args['datestart'], request.args['datestop'])
+        report_two = Report_development2(request.args['datestart'], request.args['datestop'])
         err = report_two.processing_report(str(report_two.data_start), str(report_two.data_stop))
 
         if err is not None:
