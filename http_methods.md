@@ -344,7 +344,7 @@ GET /report?name=report1&datestart='2021-04-22'&datestop='2022-04-22'
 ```
 - Отчет по страховым выплатам за период == report2 
 ```
-GET /report?name=report2&datastart='2021-04-22'&datastop='2022-04-22'
+GET /report?name=report2&datestart='2021-04-22'&datestop='2022-04-22'
 ```
 - Отчет о полисах конкретного клиента и сроках их окончания == report3 
 ```

@@ -18,13 +18,15 @@ class Report_development4:
                                         WHERE insurancePolicyClient.policyNumber = payoutsDirectoryClient.policyNumber
                                         GROUP BY idFL, idL order by money DESC LIMIT 10;  
                                     """
-                with connection.cursor() as cursor:
+                with connection.cursor(dictionary=True) as cursor:
                     cursor.execute(select_profitability)
                     result = cursor.fetchall()
-                    filename = 'report4_result.txt'
-                    f = open(filename, 'w')
+                    print(result)
+                    res = []
                     for i in result:
-                        f.write(''.join(map(lambda a: str(a).ljust(22), i)) + '\n')
+                        res.append(i)
+
+                    return res
 
 
         except Exception as e:

@@ -14,17 +14,19 @@ class Report_development2:
                                          password=config.password,
                                          database=config.database,
                                          ) as connection:
-                select_profitability = f"""SELECT  SUM(payoutAmount)
+                select_profitability = f"""SELECT  SUM(payoutAmount) as SUM
                                         FROM payoutsDirectoryClient
                                         WHERE paymentDate BETWEEN '{data_start}' and '{data_stop}'; 
                                     """
-                with connection.cursor() as cursor:
+                with connection.cursor(dictionary=True) as cursor:
                     cursor.execute(select_profitability)
                     result = cursor.fetchall()
-                    filename = 'report2_result.txt'
-                    f = open(filename, 'w')
+
+                    res = []
                     for i in result:
-                        f.write(''.join(map(lambda a: str(a).ljust(22), i)) + '\n')
+                        res.append(i)
+
+                    return res
 
 
         except Exception as e:

@@ -219,30 +219,27 @@ def all_report():
         report_one = Report_development1(request.args['datestart'], request.args['datestop'])
         err = report_one.processing_report(str(report_one.data_start), str(report_one.data_stop))
 
-        if err is not None:
-            return jsonify({"body": "error"}), 500
-        else:
-            return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report1_result.txt')
+
+        return jsonify(err)
 
     elif str(request.args['name']) == 'report2':
 
         report_two = Report_development2(request.args['datestart'], request.args['datestop'])
         err = report_two.processing_report(str(report_two.data_start), str(report_two.data_stop))
 
-        if err is not None:
-            return jsonify({"body": "error"}), 500
-        else:
-            return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report2_result.txt')
+        # if err is not None:
+        #     return jsonify({"body": "error"}), 500
+
+        return jsonify(err)
 
     elif str(request.args['name']) == 'report3':
 
         report_three = Report_development3(request.args['clientid'])
-        err = report_three.processing_report(str(report_three.id))
-
-        if err is not None:
-            return jsonify({"body": "error"}), 500
-        else:
-            return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report3_result.txt')
+        err = report_three.processing_report(report_three.id)
+        print(report_three)
+        # if err is not None:
+        #     return jsonify({"body": "error"}), 500
+        return jsonify(err)
 
 
     elif str(request.args['name']) == 'report4':
@@ -250,30 +247,27 @@ def all_report():
         report_four = Report_development4()
         err = report_four.processing_report()
 
-        if err is not None:
-            return jsonify({"body": "error"}), 500
-        else:
-            return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report4_result.txt')
+        # if err is not None:
+        #     return jsonify({"body": "error"}), 500
+        return jsonify(err)
 
     elif str(request.args['name']) == 'report5':
 
         report_five = Report_development5()
         err = report_five.processing_report()
 
-        if err is not None:
-            return jsonify({"body": "error"}), 500
-        else:
-            return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report5_result.txt')
+        # if err is not None:
+        #     return jsonify({"body": "error"}), 500
+        return jsonify(err)
 
     elif str(request.args['name']) == 'report6':
 
         report_six = Report_development6()
         err = report_six.profitability()
 
-        if err is not None:
-            return jsonify({"body": "error"}), 500
-        else:
-            return send_from_directory(directory=os.path.dirname(os.path.abspath(__file__)), path='report6_result.txt')
+        # if err is not None:
+        #     return jsonify({"body": "error"}), 500
+        return jsonify(err)
 
 
 @app.route("/viewing", methods=["GET"])

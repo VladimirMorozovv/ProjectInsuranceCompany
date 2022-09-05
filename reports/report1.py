@@ -1,5 +1,6 @@
 import config
 import mysql.connector
+import json
 
 class Report_development1:
     def __init__(self, data_start, data_stop):
@@ -14,19 +15,20 @@ class Report_development1:
                                          password=config.password,
                                          database=config.database,
                                          ) as connection:
-                select_profitability = f"""SELECT typesInsuranceObjects.ObjectType, SUM(insurancePolicyClient.costInsurance)
+                select_profitability = f"""SELECT typesInsuranceObjects.ObjectType, SUM(insurancePolicyClient.costInsurance) as SUM
                                         FROM typesInsuranceObjects, insurancePolicyClient
                                         WHERE insurancePolicyClient.idTypeObject = typesInsuranceObjects.idTypes 
                                         and insurancePolicyClient.startDate BETWEEN '{data_start}' and '{data_stop}'
                                         GROUP BY typesInsuranceObjects.ObjectType;"""
-                with connection.cursor() as cursor:
+                with connection.cursor(dictionary=True) as cursor:
                     cursor.execute(select_profitability)
                     result = cursor.fetchall()
-                    filename = 'report1_result.txt'
-                    f = open(filename, 'w')
+                    res = []
                     for i in result:
-                        f.write(''.join(map(lambda a: str(a).ljust(22), i)) + '\n')
+                        res.append(i)
 
+
+                    return res
 
         except Exception as e:
             self.mistake = e

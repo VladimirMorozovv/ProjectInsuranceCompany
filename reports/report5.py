@@ -21,13 +21,14 @@ class Report_development5:
                                         objectsInsurance.numberPassport, objectsInsurance.idObjects
                                         ORDER BY insuranceAmount DESC LIMIT 10;   
                                     """
-                with connection.cursor() as cursor:
+                with connection.cursor(dictionary=True) as cursor:
                     cursor.execute(select_profitability)
                     result = cursor.fetchall()
-                    filename = 'report5_result.txt'
-                    f = open(filename, 'w')
+                    res = []
                     for i in result:
-                        f.write(''.join(map(lambda a: str(a).ljust(22), i)) + '\n')
+                        res.append(i)
+
+                    return res
 
 
         except Exception as e:

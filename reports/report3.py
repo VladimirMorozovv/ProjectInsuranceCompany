@@ -3,6 +3,7 @@ import mysql.connector
 
 class Report_development3:
     def __init__(self, id):
+        print("succes")
         self.id = id
         self.mistake = ""
 
@@ -17,13 +18,15 @@ class Report_development3:
                 select_profitability = f"""SELECT policyNumber, stopDate FROM insurancePolicyClient
                                         WHERE idL={id} or idFL={id} and stopDate > CURRENT_DATE();  
                                     """
-                with connection.cursor() as cursor:
+                with connection.cursor(dictionary=True) as cursor:
                     cursor.execute(select_profitability)
                     result = cursor.fetchall()
-                    filename = 'report3_result.txt'
-                    f = open(filename, 'w')
+                    print(result)
+                    res = []
                     for i in result:
-                        f.write(''.join(map(lambda a: str(a).ljust(22), i)) + '\n')
+                        res.append(i)
+
+                    return res
 
 
         except Exception as e:
